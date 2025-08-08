@@ -19,7 +19,7 @@ interface WhoViewedMeSectionProps {
 
 export function WhoViewedMeSection({ profiles }: WhoViewedMeSectionProps) {
   return (
-    <section>
+    <section className='mt-10'>
       <div className='flex items-center justify-between mb-4'>
         <h2 className='text-xl sm:text-2xl font-bold'>Who Viewed Me</h2>
         <div className='flex items-center space-x-2'>
