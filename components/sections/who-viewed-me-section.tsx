@@ -46,7 +46,7 @@ export function WhoViewedMeSection({ profiles }: WhoViewedMeSectionProps) {
                 height={400}
                 className='absolute inset-0 w-full h-full object-cover'
               />
-              <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent'></div>
+              <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent'></div>
               {profile.online && (
                 <div className='absolute top-2 right-2 z-10'>
                   <Badge className='bg-green-500 text-white'>
@@ -90,13 +90,6 @@ export function WhoViewedMeSection({ profiles }: WhoViewedMeSectionProps) {
                   >
                     <MessageCircle className='h-3 w-3 mr-1' />
                     Message
-                  </Button>
-                  <Button
-                    size='sm'
-                    variant='outline'
-                    className='text-white border-white/30 hover:bg-white/20'
-                  >
-                    <Heart className='h-3 w-3' />
                   </Button>
                 </div>
               </div>

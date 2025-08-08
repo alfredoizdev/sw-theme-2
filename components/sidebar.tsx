@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button'
 import {
-  X,
   Home as HomeIcon,
   Users,
   Search,
@@ -23,13 +22,6 @@ export function Sidebar() {
   return (
     <aside className='fixed left-0 top-[92px] h-[calc(100vh-8rem)] w-64 text-foreground overflow-y-auto z-40 hidden lg:block'>
       <nav className='p-4 space-y-3'>
-        <Button
-          variant='ghost'
-          className='w-full justify-start text-foreground hover:bg-muted text-base'
-        >
-          <X className='h-5 w-5 mr-3' />
-          Close
-        </Button>
         <Button
           variant='ghost'
           className='w-full justify-start text-foreground hover:bg-muted text-base'
