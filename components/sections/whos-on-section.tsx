@@ -80,7 +80,7 @@ export function WhosOnSection({ profiles }: WhosOnSectionProps) {
                 <div className='flex space-x-2 mt-3'>
                   <Button
                     size='sm'
-                    className='flex-1 bg-white/20 hover:bg-white/30 text-white border-white/30 dark:bg-white/20 dark:hover:bg-white/30 dark:text-white dark:border-white/30 bg-gray-100 hover:bg-gray-200 text-gray-800 border-gray-300'
+                    className='flex-1 bg-white/20 hover:bg-white/30 text-white border-white/30'
                   >
                     <MessageCircle className='h-3 w-3 mr-1' />
                     Message
@@ -88,7 +88,7 @@ export function WhosOnSection({ profiles }: WhosOnSectionProps) {
                   <Button
                     size='sm'
                     variant='outline'
-                    className='text-white border-white/30 hover:bg-white/20 dark:text-white dark:border-white/30 dark:hover:bg-white/20 text-gray-800 border-gray-300 hover:bg-gray-100'
+                    className='text-white border-white/30 hover:bg-white/20'
                   >
                     <Heart className='h-3 w-3' />
                   </Button>

@@ -19,12 +19,7 @@ import {
   LogOut,
 } from 'lucide-react'
 
-interface SidebarProps {
-  activeView: 'view1' | 'view2'
-  setActiveView: (view: 'view1' | 'view2') => void
-}
-
-export function Sidebar({ activeView, setActiveView }: SidebarProps) {
+export function Sidebar() {
   return (
     <aside className='fixed left-0 top-[92px] h-[calc(100vh-8rem)] w-64 text-foreground overflow-y-auto z-40 hidden lg:block'>
       <nav className='p-4 space-y-3'>
@@ -130,22 +125,7 @@ export function Sidebar({ activeView, setActiveView }: SidebarProps) {
           <Settings className='h-5 w-5 mr-3' />
           Tools
         </Button>
-        <Button
-          variant={activeView === 'view1' ? 'secondary' : 'ghost'}
-          className='w-full justify-start text-foreground hover:bg-muted text-base'
-          onClick={() => setActiveView('view1')}
-        >
-          <Eye className='h-5 w-5 mr-3' />
-          View1
-        </Button>
-        <Button
-          variant={activeView === 'view2' ? 'secondary' : 'ghost'}
-          className='w-full justify-start text-foreground hover:bg-muted text-base'
-          onClick={() => setActiveView('view2')}
-        >
-          <Eye className='h-5 w-5 mr-3' />
-          View2
-        </Button>
+
         <Button
           variant='ghost'
           className='w-full justify-start text-foreground hover:bg-muted text-base'

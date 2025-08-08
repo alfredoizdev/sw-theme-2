@@ -8,7 +8,7 @@ import { Sidebar } from '@/components/sidebar'
 import { Footer } from '@/components/footer'
 import { ProfilesTabs } from '@/components/sections/profiles-tabs'
 import { HotDateSection } from '@/components/sections/hot-date-section'
-import { MessageCircle, ChevronDown, Menu, User } from 'lucide-react'
+import { MessageCircle, ChevronDown, Menu, User, Eye } from 'lucide-react'
 import { mockProfiles, mockHotDates } from '@/lib/fake-data'
 import { useState } from 'react'
 
@@ -38,6 +38,25 @@ export default function Home() {
                   className='hidden dark:block'
                 />
               </div>
+              {/* View Buttons */}
+              <div className='flex items-center space-x-2 ml-4'>
+                <Button
+                  variant={activeView === 'view1' ? 'secondary' : 'ghost'}
+                  size='sm'
+                  onClick={() => setActiveView('view1')}
+                >
+                  <Eye className='h-4 w-4 mr-1' />
+                  View1
+                </Button>
+                <Button
+                  variant={activeView === 'view2' ? 'secondary' : 'ghost'}
+                  size='sm'
+                  onClick={() => setActiveView('view2')}
+                >
+                  <Eye className='h-4 w-4 mr-1' />
+                  View2
+                </Button>
+              </div>
             </div>
 
             {/* Header Actions */}
@@ -46,11 +65,11 @@ export default function Home() {
               <Button
                 variant='outline'
                 size='sm'
-                className='relative hidden sm:flex'
+                className='relative hidden sm:flex pr-10'
               >
                 <MessageCircle className='h-4 w-4 mr-2' />
                 Messages
-                <Badge className='absolute -top-1 -right-1 h-5 w-5 p-0 text-xs'>
+                <Badge className='absolute -top-1 -right-3 h-5 w-5 p-0 text-xs'>
                   2
                 </Badge>
               </Button>
@@ -70,7 +89,7 @@ export default function Home() {
       {/* Main Layout */}
       <div className='flex pt-16'>
         {/* Sidebar - Desktop */}
-        <Sidebar activeView={activeView} setActiveView={setActiveView} />
+        <Sidebar />
 
         {/* Main Content */}
         <main className='flex-1 lg:ml-64 p-4 lg:p-6'>
