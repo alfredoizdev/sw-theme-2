@@ -22,14 +22,6 @@ export function HotDateSection({ hotDates }: HotDateSectionProps) {
     <section>
       <div className='flex items-center justify-between mb-4'>
         <h2 className='text-xl sm:text-2xl font-bold'>Hot Date / Event</h2>
-        <div className='flex space-x-2'>
-          <Button variant='default' size='sm'>
-            Hot Date
-          </Button>
-          <Button variant='outline' size='sm'>
-            Event
-          </Button>
-        </div>
       </div>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {/* Hot Date Column */}
