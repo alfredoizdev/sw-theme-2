@@ -1,4 +1,7 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 import {
   Home as HomeIcon,
   Users,
@@ -19,12 +22,14 @@ import {
 } from 'lucide-react'
 
 export function Sidebar() {
+  const router = useRouter()
   return (
     <aside className='fixed left-0 top-[92px] h-[calc(100vh-8rem)] w-64 text-foreground overflow-y-auto z-40 hidden lg:block'>
       <nav className='p-4 space-y-3'>
         <Button
           variant='ghost'
           className='w-full justify-start text-foreground hover:bg-muted text-base'
+          onClick={() => router.push('/')}
         >
           <HomeIcon className='h-5 w-5 mr-3' />
           Home
@@ -36,6 +41,7 @@ export function Sidebar() {
         <Button
           variant='ghost'
           className='w-full justify-start text-foreground hover:bg-muted text-base'
+          onClick={() => router.push('/search')}
         >
           <Search className='h-5 w-5 mr-3' />
           Search

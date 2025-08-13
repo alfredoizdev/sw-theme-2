@@ -10,9 +10,10 @@ import { ProfileCard } from '@/lib/fake-data'
 interface ProfilesTabsProps {
   profiles: ProfileCard[]
   activeView: 'view1' | 'view2'
+  onProfileClick?: (profileId: string) => void
 }
 
-export function ProfilesTabs({ profiles, activeView }: ProfilesTabsProps) {
+export function ProfilesTabs({ profiles, activeView, onProfileClick }: ProfilesTabsProps) {
   const [activeTab, setActiveTab] = useState<
     'whos-on' | 'who-viewed-me' | 'newest-matches'
   >('whos-on')
@@ -22,9 +23,9 @@ export function ProfilesTabs({ profiles, activeView }: ProfilesTabsProps) {
       {/* Content based on active view */}
       {activeView === 'view1' ? (
         <div className='space-y-6'>
-          <WhosOnSection profiles={profiles} />
-          <WhoViewedMeSection profiles={profiles} />
-          <NewestMatchesSection profiles={profiles} />
+          <WhosOnSection profiles={profiles} onProfileClick={onProfileClick} />
+          <WhoViewedMeSection profiles={profiles} onProfileClick={onProfileClick} />
+          <NewestMatchesSection profiles={profiles} onProfileClick={onProfileClick} />
         </div>
       ) : (
         <div className='space-y-6'>
@@ -54,12 +55,12 @@ export function ProfilesTabs({ profiles, activeView }: ProfilesTabsProps) {
           </div>
 
           {/* Section Content */}
-          {activeTab === 'whos-on' && <WhosOnSection profiles={profiles} />}
+          {activeTab === 'whos-on' && <WhosOnSection profiles={profiles} onProfileClick={onProfileClick} />}
           {activeTab === 'who-viewed-me' && (
-            <WhoViewedMeSection profiles={profiles} />
+            <WhoViewedMeSection profiles={profiles} onProfileClick={onProfileClick} />
           )}
           {activeTab === 'newest-matches' && (
-            <NewestMatchesSection profiles={profiles} />
+            <NewestMatchesSection profiles={profiles} onProfileClick={onProfileClick} />
           )}
         </div>
       )}

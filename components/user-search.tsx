@@ -4,14 +4,16 @@ import { useState, useEffect, useRef } from 'react'
 import { Search } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { ProfileCard } from '@/lib/fake-data'
 import { cn } from '@/lib/utils'
 
 interface UserSearchProps {
   users: ProfileCard[]
+  isMobile?: boolean
 }
 
-export function UserSearch({ users }: UserSearchProps) {
+export function UserSearch({ users, isMobile = false }: UserSearchProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredUsers, setFilteredUsers] = useState<ProfileCard[]>([])
@@ -22,7 +24,7 @@ export function UserSearch({ users }: UserSearchProps) {
     if (searchTerm.trim() === '') {
       setFilteredUsers(users.slice(0, 8)) // Show first 8 users when no search
     } else {
-      const filtered = users.filter(user =>
+      const filtered = users.filter((user) =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
       setFilteredUsers(filtered.slice(0, 8)) // Limit to 8 results
@@ -31,7 +33,10 @@ export function UserSearch({ users }: UserSearchProps) {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false)
       }
     }
@@ -43,7 +48,15 @@ export function UserSearch({ users }: UserSearchProps) {
   }, [])
 
   const handleInputClick = () => {
-    setIsOpen(true)
+    if (!isMobile) {
+      setIsOpen(true)
+    }
+  }
+
+  const handleMobileButtonClick = () => {
+    if (isMobile) {
+      setIsOpen(!isOpen)
+    }
   }
 
   const handleUserSelect = (user: ProfileCard) => {
@@ -51,58 +64,164 @@ export function UserSearch({ users }: UserSearchProps) {
     setIsOpen(false)
   }
 
+  // Mobile version - just the button
+  if (isMobile) {
+    return (
+      <div ref={searchRef} className='relative'>
+        <Button
+          variant='ghost'
+          size='sm'
+          className='p-2'
+          onClick={handleMobileButtonClick}
+        >
+          <Search className='h-5 w-5' />
+        </Button>
+
+        {isOpen && (
+          <Card className='absolute top-[50px] right-[-85px]  w-80 mt-3 z-50 max-h-80 overflow-hidden'>
+            <div className='p-3'>
+              {/* Search input inside dropdown */}
+              <div className='relative mb-3'>
+                <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground' />
+                <input
+                  ref={inputRef}
+                  type='text'
+                  placeholder='Search by name'
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className={cn(
+                    'w-full pl-10 pr-4 py-2 text-sm',
+                    'border border-input bg-background',
+                    'rounded-md focus:outline-none focus:ring-2 focus:ring-ring',
+                    'placeholder:text-muted-foreground',
+                    'transition-colors duration-200'
+                  )}
+                />
+              </div>
+
+              {/* User list */}
+              <div className='max-h-48 overflow-y-auto'>
+                {filteredUsers.length > 0 ? (
+                  <div className='space-y-1'>
+                    {filteredUsers.map((user) => (
+                      <button
+                        key={user.id}
+                        onClick={() => handleUserSelect(user)}
+                        className={cn(
+                          'w-full flex items-center space-x-3 p-2 rounded-md',
+                          'hover:bg-muted transition-colors duration-200',
+                          'text-left focus:outline-none focus:ring-2 focus:ring-ring'
+                        )}
+                      >
+                        <Avatar className='h-8 w-8'>
+                          <AvatarImage
+                            src={user.image}
+                            alt={user.name}
+                            width={32}
+                            height={32}
+                            className='object-cover'
+                          />
+                          <AvatarFallback>
+                            {user.name.substring(0, 2).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className='flex-1 min-w-0'>
+                          <p className='text-sm font-medium truncate'>
+                            {user.name}
+                          </p>
+                          <div className='flex items-center space-x-2 text-xs text-muted-foreground'>
+                            <span>{user.age}</span>
+                            <span>•</span>
+                            <span>{user.distance}</span>
+                            {user.online && (
+                              <>
+                                <span>•</span>
+                                <span className='text-green-600 dark:text-green-400'>
+                                  Online
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className='p-4 text-center text-sm text-muted-foreground'>
+                    No users found
+                  </div>
+                )}
+              </div>
+            </div>
+          </Card>
+        )}
+      </div>
+    )
+  }
+
+  // Desktop version - input field
   return (
-    <div ref={searchRef} className="relative">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+    <div ref={searchRef} className='relative'>
+      <div className='relative'>
+        <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground' />
         <input
           ref={inputRef}
-          type="text"
-          placeholder="Search users..."
+          type='text'
+          placeholder='Search by name'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onClick={handleInputClick}
           className={cn(
-            "w-full pl-10 pr-4 py-2 text-sm",
-            "border border-input bg-background",
-            "rounded-md focus:outline-none focus:ring-2 focus:ring-ring",
-            "placeholder:text-muted-foreground",
-            "transition-colors duration-200"
+            'w-full pl-10 pr-4 py-2 text-sm',
+            'border border-input bg-background',
+            'rounded-md focus:outline-none focus:ring-2 focus:ring-ring',
+            'placeholder:text-muted-foreground',
+            'transition-colors duration-200'
           )}
         />
       </div>
 
       {isOpen && (
-        <Card className="absolute top-full left-0 right-0 mt-1 z-50 max-h-64 overflow-y-auto">
-          <div className="p-2">
+        <Card className='absolute top-full left-0 w-72 sm:w-80 md:w-96 mt-1 z-50 max-h-64 overflow-y-auto'>
+          <div className='p-2'>
             {filteredUsers.length > 0 ? (
-              <div className="space-y-1">
+              <div className='space-y-1'>
                 {filteredUsers.map((user) => (
                   <button
                     key={user.id}
                     onClick={() => handleUserSelect(user)}
                     className={cn(
-                      "w-full flex items-center space-x-3 p-2 rounded-md",
-                      "hover:bg-muted transition-colors duration-200",
-                      "text-left focus:outline-none focus:ring-2 focus:ring-ring"
+                      'w-full flex items-center space-x-3 p-2 rounded-md',
+                      'hover:bg-muted transition-colors duration-200',
+                      'text-left focus:outline-none focus:ring-2 focus:ring-ring'
                     )}
                   >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.image} alt={user.name} />
+                    <Avatar className='h-8 w-8'>
+                      <AvatarImage
+                        src={user.image}
+                        alt={user.name}
+                        width={32}
+                        height={32}
+                        className='object-cover'
+                      />
                       <AvatarFallback>
                         {user.name.substring(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{user.name}</p>
-                      <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                    <div className='flex-1 min-w-0'>
+                      <p className='text-sm font-medium truncate'>
+                        {user.name}
+                      </p>
+                      <div className='flex items-center space-x-2 text-xs text-muted-foreground'>
                         <span>{user.age}</span>
                         <span>•</span>
                         <span>{user.distance}</span>
                         {user.online && (
                           <>
                             <span>•</span>
-                            <span className="text-green-600 dark:text-green-400">Online</span>
+                            <span className='text-green-600 dark:text-green-400'>
+                              Online
+                            </span>
                           </>
                         )}
                       </div>
@@ -111,7 +230,7 @@ export function UserSearch({ users }: UserSearchProps) {
                 ))}
               </div>
             ) : (
-              <div className="p-4 text-center text-sm text-muted-foreground">
+              <div className='p-4 text-center text-sm text-muted-foreground'>
                 No users found
               </div>
             )}
