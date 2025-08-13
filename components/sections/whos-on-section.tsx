@@ -6,7 +6,6 @@ import {
   ArrowRight,
   MoreHorizontal,
   MessageCircle,
-  Heart,
   MapPin,
   Images,
 } from 'lucide-react'

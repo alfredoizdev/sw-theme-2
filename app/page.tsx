@@ -3,13 +3,16 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { Sidebar } from '@/components/sidebar'
 import { Footer } from '@/components/footer'
 import { ProfilesTabs } from '@/components/sections/profiles-tabs'
 import { HotDateSection } from '@/components/sections/hot-date-section'
+import { StatsSection } from '@/components/sections/stats-section'
+import { UserSearch } from '@/components/user-search'
 import { MessageCircle, ChevronDown, Menu, User, Eye } from 'lucide-react'
-import { mockProfiles, mockHotDates } from '@/lib/fake-data'
+import { mockProfiles, mockHotDates, mockStats } from '@/lib/fake-data'
 import { useState } from 'react'
 
 export default function Home() {
@@ -39,7 +42,7 @@ export default function Home() {
                 />
               </div>
               {/* View Buttons */}
-              <div className='flex items-center space-x-2 ml-4'>
+              <div className='items-center space-x-2 ml-4 hidden sm:flex'>
                 <Button
                   variant={activeView === 'view1' ? 'secondary' : 'ghost'}
                   size='sm'
@@ -59,6 +62,11 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Search Bar */}
+            <div className='flex-1 max-w-sm mx-4 hidden md:block'>
+              <UserSearch users={mockProfiles} />
+            </div>
+
             {/* Header Actions */}
             <div className='flex items-center space-x-2 sm:space-x-4'>
               <ThemeToggle />
@@ -74,7 +82,16 @@ export default function Home() {
                 </Badge>
               </Button>
               <Button variant='outline' size='sm' className='hidden sm:flex'>
-                <User className='h-4 w-4 mr-2' />
+                <Avatar className='h-6 w-6 mr-2'>
+                  <AvatarImage
+                    src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face&f=face'
+                    alt='sls_alfredo'
+                    width={400}
+                    height={600}
+                    className='object-cover'
+                  />
+                  <AvatarFallback>SA</AvatarFallback>
+                </Avatar>
                 sls_alfredo
                 <ChevronDown className='h-4 w-4 ml-2' />
               </Button>
@@ -94,6 +111,9 @@ export default function Home() {
         {/* Main Content */}
         <main className='flex-1 lg:ml-64 p-4 lg:p-6'>
           <div className='w-full mx-auto space-y-6 pt-10 pb-16'>
+            {/* Stats Section */}
+            <StatsSection stats={mockStats} />
+
             {/* Profiles Tabs */}
             <ProfilesTabs profiles={mockProfiles} activeView={activeView} />
 

@@ -21,6 +21,12 @@ export interface HotDate {
   ageRange: string
 }
 
+export interface StatCard {
+  id: string
+  title: string
+  value: string
+}
+
 export const mockProfiles: ProfileCard[] = [
   {
     id: '1',
@@ -204,4 +210,27 @@ export const mockHotDates: HotDate[] = [
     interestedIn: ['Single Female', 'Couple (M/F)'],
     ageRange: '25 - 40',
   },
+]
+
+export const mockStats: StatCard[] = [
+  {
+    id: '1',
+    title: 'Online Now',
+    value: '5,112'
+  },
+  {
+    id: '2',
+    title: 'New Members',
+    value: '5,023'
+  },
+  {
+    id: '3',
+    title: 'New Pictures',
+    value: '19,636'
+  },
+  {
+    id: '4',
+    title: 'Member Groups',
+    value: '14,654'
+  }
 ]
