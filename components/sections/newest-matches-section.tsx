@@ -6,7 +6,6 @@ import {
   ArrowRight,
   MoreHorizontal,
   MessageCircle,
-  Heart,
   MapPin,
   Images,
 } from 'lucide-react'
@@ -17,7 +16,10 @@ interface NewestMatchesSectionProps {
   onProfileClick?: (profileId: string) => void
 }
 
-export function NewestMatchesSection({ profiles, onProfileClick }: NewestMatchesSectionProps) {
+export function NewestMatchesSection({
+  profiles,
+  onProfileClick,
+}: NewestMatchesSectionProps) {
   return (
     <section className='mt-10'>
       <div className='flex items-center justify-between mb-4'>
@@ -33,7 +35,7 @@ export function NewestMatchesSection({ profiles, onProfileClick }: NewestMatches
             key={profile.id}
             className={index === 4 ? 'hidden lg:block' : ''}
           >
-            <Card 
+            <Card
               className='overflow-hidden hover:shadow-xl transition-shadow relative h-96 border-0 shadow-md cursor-pointer'
               onClick={() => onProfileClick?.(profile.id)}
             >
